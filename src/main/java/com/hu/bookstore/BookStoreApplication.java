@@ -1,13 +1,14 @@
 package com.hu.bookstore;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BookstoreApplication {
+@MapperScan("com.xiaoge.bootsecurity.mapper")
+public class BookStoreApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BookstoreApplication.class, args);
+        SpringApplication.run(BookStoreApplication.class, args);
     }
-
 }

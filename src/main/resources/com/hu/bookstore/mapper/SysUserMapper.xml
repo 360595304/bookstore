@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hu.bookstore.mapper.SysUserMapper">
+    <!--根据用户信息进行分页查询-->
+    <select id="getUserList" resultType="SysUser">
+
+      select * from sys_user
+
+        <where>
+            <if test="userVO.username != null and userVO.username != ''">
+                and username like concat('%',#{userVO.username},'%')
+
+            </if>
+            <if test="userVO.nickname != null and userVO.nickname != ''">
+
+            and nickname like concat('%',#{userVO.nickname},'%')
+
+            </if>
+            <if test="userVO.email != null and userVO.email != ''">
+
+            and email like concat('%',#{userVO.email},'%')
+
+            </if>
+            <if test="userVO.sex != null">
+
+            and sex = #{userVO.sex}
+            </if>
+        </where>
+    </select>
+</mapper>
