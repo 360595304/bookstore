@@ -61,7 +61,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SysUser::getUsername, sysUser.getUsername());
         if (this.baseMapper.selectCount(wrapper) != 0) {
-            new BusinessException(ResultCode.USER_ACCOUNT_ALREADY_EXIST.getCode(),
+            throw new BusinessException(ResultCode.USER_ACCOUNT_ALREADY_EXIST.getCode(),
                     ResultCode.USER_ACCOUNT_ALREADY_EXIST.getMessage());
         }
         sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));

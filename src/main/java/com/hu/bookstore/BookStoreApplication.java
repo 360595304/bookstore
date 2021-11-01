@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.xiaoge.bootsecurity.mapper")
+@MapperScan("com.hu.bookstore.mapper")
 public class BookStoreApplication {
 
     public static void main(String[] args) {

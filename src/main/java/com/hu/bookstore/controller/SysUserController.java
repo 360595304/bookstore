@@ -1,6 +1,7 @@
 package com.hu.bookstore.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hu.bookstore.entity.SysRole;
 import com.hu.bookstore.entity.SysUser;
@@ -148,7 +149,6 @@ public class SysUserController {
     @PostMapping("/add")
     public Result add(@RequestBody SysUser sysUser) {
 //        System.out.println(sysUser);
-
         sysUserService.add(sysUser);
         return Result.ok();
     }
