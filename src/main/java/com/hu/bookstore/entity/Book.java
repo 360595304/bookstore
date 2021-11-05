@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author suhu
  * @createDate 2021-10-31
@@ -18,45 +20,48 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "SysBook对象", description = "书籍信息表")
 public class Book {
     @ApiModelProperty("书籍id")
-    String id;
+    private String id;
 
     @ApiModelProperty("书名")
-    String name;
+    private String name;
 
     @ApiModelProperty("作者")
-    String author;
+    private String author;
 
     @ApiModelProperty("类型")
-    String type;
+    private String type;
 
     @ApiModelProperty("出版社")
-    String press;
+    private String press;
 
     @ApiModelProperty("原价")
-    Double originalPrice;
+    private Double originalPrice;
 
     @ApiModelProperty("折扣")
-    Integer discount;
+    private Integer discount;
 
     @ApiModelProperty("折扣价")
-    Double discountPrice;
+    private Double discountPrice;
 
     @ApiModelProperty("ISBN号")
-    String ISBN;
+    private String ISBN;
 
     @ApiModelProperty("存货")
-    String inventory;
+    private String inventory;
 
     @ApiModelProperty("图片url")
-    String pictureUrl;
+    private String pictureUrl;
+
+    @ApiModelProperty("出版时间")
+    private Date pubDate;
 
     @ApiModelProperty("简介")
-    String intro;
+    private String intro;
 
     @ApiModelProperty("推荐 1:推荐")
-    Integer commend;
+    private Integer commend;
 
     @ApiModelProperty("状态[0:下架,1:上架]")
-    Integer state;
+    private Integer state;
 
 }

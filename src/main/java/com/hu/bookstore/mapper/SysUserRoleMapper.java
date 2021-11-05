@@ -3,6 +3,7 @@ package com.hu.bookstore.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hu.bookstore.entity.SysUserRole;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -15,4 +16,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
+    void addUserRole(@Param("sysUserRole") SysUserRole sysUserRole);
 }

@@ -59,16 +59,29 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public void add(SysUser sysUser) {
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        // 检查手机号是否已经被注册
+        wrapper.eq(SysUser::getPhoneNumber, sysUser.getPhoneNumber());
+        if (this.baseMapper.selectCount(wrapper) != 0) {
+            throw new BusinessException(ResultCode.USER_PHONE_ALREADY_EXIST.getCode(),
+                    ResultCode.USER_PHONE_ALREADY_EXIST.getMessage());
+        }
+        // 检查用户名是否存在
+        wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SysUser::getUsername, sysUser.getUsername());
         if (this.baseMapper.selectCount(wrapper) != 0) {
             throw new BusinessException(ResultCode.USER_ACCOUNT_ALREADY_EXIST.getCode(),
                     ResultCode.USER_ACCOUNT_ALREADY_EXIST.getMessage());
         }
+
         sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
         sysUser.setEnabled(UserStatusEnum.AVAILABLE.getStatusCode());
         sysUser.setType(UserTypeEnum.SYSTEM_USER.getTypeCode());
-        sysUser.setAvatar("https://xinguan-parent.oss-cn-hangzhou.aliyuncs.com/2020/10/23/327fdad160b840f8b14611f4d00d94bd.png");
+        sysUser.setAvatar("https://img1.baidu.com/it/u=756226200,2409592995&fm=26&fmt=auto");
         this.baseMapper.insert(sysUser);
+        SysUserRole userRole = new SysUserRole();
+        userRole.setUserId(sysUser.getId());
+        userRole.setRoleId(5L);
+        sysUserRoleMapper.addUserRole(userRole);
     }
 
     /**

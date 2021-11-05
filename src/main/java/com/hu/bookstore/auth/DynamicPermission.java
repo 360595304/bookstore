@@ -18,13 +18,13 @@ public class DynamicPermission {
     private SysApiMapper sysApiMapper;
 
     public boolean hasPermission(HttpServletRequest request,
-                                 Authentication authentication){
+                                 Authentication authentication) {
 
         Object principal = authentication.getPrincipal();
 
-        if(principal instanceof UserDetails){
+        if (principal instanceof UserDetails) {
             //得到当前的账号
-            UserDetails userDetails = (UserDetails)principal;
+            UserDetails userDetails = (UserDetails) principal;
             //获取当前登录账号的用户名称
             String username = userDetails.getUsername();
             //通过用户名称获取API列表
@@ -41,7 +41,7 @@ public class DynamicPermission {
                     /trip/api*//*x    匹配 /trip/api/x，/trip/api/ax，/trip/api/abx ；但不匹配 /trip/abc/x；
                     /trip/a/a?x    匹配 /trip/a/abx；但不匹配 /trip/a/ax，/trip/a/abcx
                     /**//*api/alie    匹配 /trip/api/alie，/trip/dax/api/alie；但不匹配 /trip/a/api
-                    *//**//**.htmlm   匹配所有以.htmlm结尾的路径
+             *//**//*.htmlm   匹配所有以.htmlm结尾的路径
              */
             AntPathMatcher antPathMatcher = new AntPathMatcher();
 
@@ -51,24 +51,24 @@ public class DynamicPermission {
             String method = request.getMethod();
 
             //anyMatch：判断的条件里，任意一个元素成功，返回true
-            boolean flag = apiList.stream().anyMatch(api->{
+            boolean flag = apiList.stream().anyMatch(api -> {
                 //判断访问的uri是否满足数据库中存放的url(通过正则表达式进行判断)
                 //   /role/authority/?   /role/authority/12
                 boolean match = antPathMatcher.match(api.getApiUrl(), uri);
 
                 //判断请求方式是否和数据库中匹配（数据库存储：GET,POST,PUT,DELETE）
-                boolean equals = api.getApiMethod().equals(method);
+                boolean equals = api.getApiMethod().contains(method);
 
                 //两个都为真则满足条件
                 return match && equals;
             });
-            if(flag){
-                return flag;
-            }else{
-                throw  new MyAccessDeniedException("您没有访问该API的权限！");
+            if (flag) {
+                return true;
+            } else {
+                throw new MyAccessDeniedException("您没有访问该API的权限！");
             }
-        }else{
-            throw  new MyAccessDeniedException("不是UserDetails类型！");
+        } else {
+            throw new MyAccessDeniedException("不是UserDetails类型！");
         }
     }
 }

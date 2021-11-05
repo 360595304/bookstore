@@ -46,16 +46,17 @@ public class SysUserController {
 
     /**
      * 获取用户列表
+     *
      * @return
      */
     @ApiOperation(value = "用户列表", notes = "模糊查询用户列表")
     @PostMapping("/getUserList")
     public Result getUserList(@RequestParam(value = "current", defaultValue = "1") Integer current,
                               @RequestParam(value = "size", defaultValue = "7") Integer size,
-                              @RequestBody UserVO userVO){
-        Page<SysUser> page = new Page<>(current,size);
-        Page<SysUser> pageInfo = sysUserService.getUserList(page,userVO);
-        return Result.ok().data("pageInfo",pageInfo);
+                              @RequestBody UserVO userVO) {
+        Page<SysUser> page = new Page<>(current, size);
+        Page<SysUser> pageInfo = sysUserService.getUserList(page, userVO);
+        return Result.ok().data("pageInfo", pageInfo);
     }
 
     /**
@@ -67,13 +68,13 @@ public class SysUserController {
     @GetMapping("/getUserInfo")
     public Result info() {
         SysUser sysUser = sysUserService.getUserInfo();
-        return Result.ok().data("userInfo",sysUser);
+        return Result.ok().data("userInfo", sysUser);
     }
 
     /**
      * 分配角色
      *
-     * @param id 用户id
+     * @param id   用户id
      * @param rids 角色id的数组
      * @return
      */
@@ -129,6 +130,7 @@ public class SysUserController {
 
     /**
      * 查询单个用户信息
+     *
      * @param id
      * @return
      */
@@ -141,6 +143,7 @@ public class SysUserController {
 
     /**
      * 添加用户信息
+     *
      * @param sysUser
      * @return
      */
@@ -155,6 +158,7 @@ public class SysUserController {
 
     /**
      * 用户角色信息
+     *
      * @param id 用户ID
      * @return
      */
@@ -167,14 +171,15 @@ public class SysUserController {
         List<SysRole> roles = sysRoleService.getRoleList();
         //转成前端需要的角色Item
         List<RoleTransferItemVO> items = converterToRoleTransferItem(roles);
-        Map<String,Object> map = new HashMap<>();
-        map.put("hasRoleIds",hasRoleIds);
-        map.put("roles",items);
+        Map<String, Object> map = new HashMap<>();
+        map.put("hasRoleIds", hasRoleIds);
+        map.put("roles", items);
         return Result.ok().data(map);
     }
 
     /**
      * 导出excel
+     *
      * @param response
      */
     @ApiOperation(value = "导出excel", notes = "导出所有用户的excel表格")
@@ -186,16 +191,17 @@ public class SysUserController {
 
     /**
      * 转成前端需要的角色Item
+     *
      * @param list
      * @return
      */
     public static List<RoleTransferItemVO> converterToRoleTransferItem(List<SysRole> list) {
-        List<RoleTransferItemVO> itemVOList=new ArrayList<>();
-        if(!CollectionUtils.isEmpty(list)){
+        List<RoleTransferItemVO> itemVOList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(list)) {
             for (SysRole role : list) {
                 RoleTransferItemVO item = new RoleTransferItemVO();
                 item.setLabel(role.getRoleName());
-                item.setDisabled(role.getEnabled()==0);
+                item.setDisabled(role.getEnabled() == 0);
                 item.setKey(role.getId());
                 itemVOList.add(item);
             }

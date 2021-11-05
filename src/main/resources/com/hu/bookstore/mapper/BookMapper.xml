@@ -2,4 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hu.bookstore.mapper.BookMapper">
 
+    <select id="getAllBook" resultType="Book">
+        select id,
+               name,
+               author,
+               type,
+               press,
+               original_price,
+               discount,
+               discount_price,
+               ISBN,
+               inventory,
+               picture_url,
+               intro,
+               commend,
+               state,
+               pub_date
+        from sys_book limit #{begin},#{size}
+    </select>
 </mapper>

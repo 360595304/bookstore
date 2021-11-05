@@ -7,6 +7,8 @@ import com.hu.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author suhu
  * @createDate 2021-10-31
@@ -16,4 +18,23 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     @Autowired
     BookMapper bookMapper;
 
+    @Override
+    public List<Book> getBookList(int current, int size) {
+        return bookMapper.getAllBook((current - 1) * size, size);
+    }
+
+    @Override
+    public void addBook(Book book) {
+
+    }
+
+    @Override
+    public void update(Book book) {
+
+    }
+
+    @Override
+    public List<Book> getBookList(String value) {
+        return null;
+    }
 }

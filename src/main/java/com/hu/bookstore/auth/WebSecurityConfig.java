@@ -101,14 +101,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //第3步：请求权限配置
         http.authorizeRequests()
-                //.antMatchers("/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/swagger-ui.html").permitAll()
-                .antMatchers(HttpMethod.GET,"/doc.html").permitAll()
-                .antMatchers(HttpMethod.GET,"/webjars/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/v2/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/swagger-resources/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/users/getUserInfo").permitAll()
-                .antMatchers(HttpMethod.POST,"/users/add").permitAll()
+//                .antMatchers("/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/swagger-ui.html").permitAll()
+//                .antMatchers(HttpMethod.GET,"/doc.html").permitAll()
+//                .antMatchers(HttpMethod.GET,"/webjars/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/v2/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/swagger-resources/**").permitAll()
+//                .antMatchers(HttpMethod.GET,"/users/getUserInfo").permitAll()
+//                .antMatchers(HttpMethod.POST,"/users/add").permitAll()
                 .anyRequest().access("@dynamicPermission.hasPermission(request,authentication)");
 
         //第4步：拦截token，并检测。在 UsernamePasswordAuthenticationFilter 之前添加 JwtAuthenticationTokenFilter

@@ -123,7 +123,11 @@ public class JwtTokenUtil {
         try {
             claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
         } catch (Exception e) {
-            new Throwable(e);
+            try {
+                throw new Throwable(e);
+            } catch (Throwable ex) {
+                ex.printStackTrace();
+            }
         }
         return claims;
     }
