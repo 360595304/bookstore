@@ -47,9 +47,6 @@ public class SysUser implements Serializable {
     @ApiModelProperty(value = "头像")
     private String avatar;
 
-    @ApiModelProperty(value = "联系电话")
-    private String phoneNumber;
-
     @ApiModelProperty(value = "账户是否禁用 默认为1（可用）")
     private Integer enabled;
 

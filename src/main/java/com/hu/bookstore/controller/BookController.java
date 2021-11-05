@@ -26,15 +26,37 @@ public class BookController {
     @Autowired
     BookService bookService;
 
-    @GetMapping("/getAllBookList")
-    @PermitAll
-    public Result getAllBookList(@RequestParam(value = "current", defaultValue = "1") Integer current,
-                                 @RequestParam(value = "size", defaultValue = "7") Integer size) {
-        List<Book> bookList = bookService.getBookList(current, size);
-//        System.out.println(bookList);
+    @GetMapping("/getBookList")
+    public Result getBookList(@RequestParam(value = "current", defaultValue = "1") Integer current,
+                                 @RequestParam(value = "size", defaultValue = "7") Integer size,
+                              @RequestBody Map<String, Object> condition) {
+        List<Book> bookList;
+        if (condition.isEmpty()){
+             bookList = bookService.getBookList(current, size);
+        } else {
+            bookList = bookService.getBookList(current, size, condition);
+        }
         Map<String, Object> data = new HashMap<>();
         data.put("bookArr",bookList);
-        return Result.ok().data((data));
+        return Result.ok().data(data);
     }
 
+    @PostMapping("/updateBook")
+    public Result updateBook(@RequestBody Book newBook) {
+        bookService.updateById(newBook);
+        return Result.ok();
+    }
+
+
+    @PostMapping("/addBook")
+    public Result addBook(@RequestBody Book newBook) {
+        bookService.addBook(newBook);
+        return Result.ok();
+    }
+
+    @DeleteMapping("/deleteBook/{id}")
+    public Result deleteBook(@PathVariable String id) {
+        bookService.removeById(id);
+        return Result.ok();
+    }
 }

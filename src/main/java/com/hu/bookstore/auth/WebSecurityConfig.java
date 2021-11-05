@@ -101,7 +101,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //第3步：请求权限配置
         http.authorizeRequests()
-//                .antMatchers("/**").permitAll()
+                .antMatchers("/**").permitAll()
 //                .antMatchers(HttpMethod.GET,"/swagger-ui.html").permitAll()
 //                .antMatchers(HttpMethod.GET,"/doc.html").permitAll()
 //                .antMatchers(HttpMethod.GET,"/webjars/**").permitAll()

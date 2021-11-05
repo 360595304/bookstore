@@ -7,14 +7,17 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hu.bookstore.entity.SysRole;
 import com.hu.bookstore.entity.SysUser;
 import com.hu.bookstore.entity.SysUserRole;
+import com.hu.bookstore.entity.Trolley;
 import com.hu.bookstore.enums.UserStatusEnum;
 import com.hu.bookstore.enums.UserTypeEnum;
 import com.hu.bookstore.exception.BusinessException;
 import com.hu.bookstore.mapper.SysRoleMapper;
 import com.hu.bookstore.mapper.SysUserMapper;
 import com.hu.bookstore.mapper.SysUserRoleMapper;
+import com.hu.bookstore.mapper.TrolleyMapper;
 import com.hu.bookstore.response.ResultCode;
 import com.hu.bookstore.service.SysUserService;
+import com.hu.bookstore.service.TrolleyService;
 import com.hu.bookstore.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,6 +53,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private SysRoleMapper sysRoleMapper;
 
+    @Autowired
+    private TrolleyMapper trolleyMapper;
+
     /**
      * 添加用户信息
      *
@@ -59,14 +65,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public void add(SysUser sysUser) {
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
-        // 检查手机号是否已经被注册
-        wrapper.eq(SysUser::getPhoneNumber, sysUser.getPhoneNumber());
-        if (this.baseMapper.selectCount(wrapper) != 0) {
-            throw new BusinessException(ResultCode.USER_PHONE_ALREADY_EXIST.getCode(),
-                    ResultCode.USER_PHONE_ALREADY_EXIST.getMessage());
-        }
         // 检查用户名是否存在
-        wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SysUser::getUsername, sysUser.getUsername());
         if (this.baseMapper.selectCount(wrapper) != 0) {
             throw new BusinessException(ResultCode.USER_ACCOUNT_ALREADY_EXIST.getCode(),
@@ -77,11 +76,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setEnabled(UserStatusEnum.AVAILABLE.getStatusCode());
         sysUser.setType(UserTypeEnum.SYSTEM_USER.getTypeCode());
         sysUser.setAvatar("https://img1.baidu.com/it/u=756226200,2409592995&fm=26&fmt=auto");
-        this.baseMapper.insert(sysUser);
+        baseMapper.insert(sysUser);
         SysUserRole userRole = new SysUserRole();
         userRole.setUserId(sysUser.getId());
         userRole.setRoleId(5L);
         sysUserRoleMapper.addUserRole(userRole);
+        Trolley trolley = new Trolley();
+        trolley.setUserId(sysUser.getId());
+        trolleyMapper.insert(trolley);
     }
 
     /**
@@ -92,7 +94,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public SysUser getUserInfo() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = null;
+        String username;
         if (principal instanceof UserDetails) {
             username = ((UserDetails) principal).getUsername();
         } else {
@@ -101,8 +103,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //根据用户名查询用户信息
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SysUser::getUsername, username);
-        SysUser user = sysUserMapper.selectOne(wrapper);
-        return user;
+        return sysUserMapper.selectOne(wrapper);
     }
 
     /**

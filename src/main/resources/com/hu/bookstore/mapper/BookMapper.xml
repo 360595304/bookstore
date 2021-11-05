@@ -20,4 +20,28 @@
                pub_date
         from sys_book limit #{begin},#{size}
     </select>
+    <select id="getBookList" resultType="com.hu.bookstore.entity.Book">
+        select id,
+               name,
+               author,
+               type,
+               press,
+               original_price,
+               discount,
+               discount_price,
+               ISBN,
+               inventory,
+               picture_url,
+               intro,
+               commend,
+               state,
+               pub_date
+        from sys_book
+        where
+        <foreach collection="condition" item="value" index="key" separator="and">
+            ${key} like ('%${value}%')
+        </foreach>
+        limit #{begin},#{size}
+
+    </select>
 </mapper>

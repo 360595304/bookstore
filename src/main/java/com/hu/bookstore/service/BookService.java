@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hu.bookstore.entity.Book;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BookService extends IService<Book> {
 
@@ -13,5 +14,5 @@ public interface BookService extends IService<Book> {
 
     void update(Book book);
 
-    List<Book> getBookList(String value);
+    List<Book> getBookList(Integer current, Integer size, Map<String, Object> condition);
 }

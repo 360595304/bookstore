@@ -1,5 +1,7 @@
 package com.hu.bookstore.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "SysBook对象", description = "书籍信息表")
+@TableName("sys_book")
 public class Book {
     @ApiModelProperty("书籍id")
     private String id;
@@ -44,6 +47,7 @@ public class Book {
     private Double discountPrice;
 
     @ApiModelProperty("ISBN号")
+    @TableField("ISBN")
     private String ISBN;
 
     @ApiModelProperty("存货")

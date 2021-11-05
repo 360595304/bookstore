@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author suhu
@@ -25,16 +26,17 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
 
     @Override
     public void addBook(Book book) {
-
+        bookMapper.insert(book);
     }
 
     @Override
     public void update(Book book) {
-
+        bookMapper.updateById(book);
     }
 
+
     @Override
-    public List<Book> getBookList(String value) {
-        return null;
+    public List<Book> getBookList(Integer current, Integer size, Map<String, Object> condition) {
+        return bookMapper.getBookList((current - 1) * size, size, condition);
     }
 }

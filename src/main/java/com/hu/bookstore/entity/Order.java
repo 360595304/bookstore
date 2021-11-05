@@ -1,5 +1,6 @@
 package com.hu.bookstore.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "SysOrder对象", description = "订单信息表")
+@TableName("sys_order")
 public class Order {
     @ApiModelProperty("订单id")
     String id;
