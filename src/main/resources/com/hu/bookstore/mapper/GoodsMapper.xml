@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hu.bookstore.mapper.GoodsMapper">
+
+    <update id="setOrderId">
+        update sys_goods set order_id=#{orderId} where id=#{goodsId}
+    </update>
+    <update id="setAllOrderId">
+        update sys_goods set order_id=#{orderId} where trolley_id=#{trolleyId}
+    </update>
+</mapper>

@@ -2,6 +2,7 @@ package com.hu.bookstore.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hu.bookstore.entity.Goods;
+import com.hu.bookstore.entity.Order;
 import com.hu.bookstore.mapper.GoodsMapper;
 import com.hu.bookstore.mapper.TrolleyMapper;
 import com.hu.bookstore.service.GoodsService;
@@ -28,4 +29,20 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     public void addGoods(Goods goods) {
         goodsMapper.insert(goods);
     }
+
+    @Override
+    public void updateGoods(Goods goods) {
+        goodsMapper.updateById(goods);
+    }
+
+    @Override
+    public void setOrderId(int goodsId, String orderId) {
+        goodsMapper.setOrderId(goodsId, orderId);
+    }
+
+    @Override
+    public void setAllOrderId(int trolleyId, String orderId) {
+        goodsMapper.setAllOrderId(trolleyId, orderId);
+    }
+
 }

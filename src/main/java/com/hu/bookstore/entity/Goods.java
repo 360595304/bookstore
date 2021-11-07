@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class Goods {
 
     @ApiModelProperty(value = "id")
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
 
     @ApiModelProperty(value = "所属订单id")

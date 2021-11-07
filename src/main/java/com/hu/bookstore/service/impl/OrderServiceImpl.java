@@ -22,4 +22,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     SysUserMapper userMapper;
 
 
+    @Override
+    public void addOrder(Order order) {
+        orderMapper.insert(order);
+    }
 }

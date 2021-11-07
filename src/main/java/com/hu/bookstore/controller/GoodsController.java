@@ -39,4 +39,10 @@ public class GoodsController {
         goodsService.addGoods(goods);
         return Result.ok();
     }
+
+    @PostMapping("/updateGoods")
+    public Result updateGoods(@RequestBody Goods goods) {
+        goodsService.updateGoods(goods);
+        return Result.ok();
+    }
 }

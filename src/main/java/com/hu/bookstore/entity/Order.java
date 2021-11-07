@@ -1,6 +1,6 @@
 package com.hu.bookstore.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -21,15 +21,14 @@ import java.util.Date;
 @ApiModel(value = "SysOrder对象", description = "订单信息表")
 @TableName("sys_order")
 public class Order {
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
     @ApiModelProperty("订单id")
     String id;
 
     @ApiModelProperty("用户id")
     Long userId;
 
-    @ApiModelProperty("书id")
-    String bookId;
-
+    @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty("创建时间")
     Date createTime;
 
