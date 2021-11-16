@@ -1,5 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hu.bookstore.mapper.OrderMapper">
+    <update id="updateState">
+        update sys_order
+        set state=3
+        where id = #{orderId}
+    </update>
+    <update id="updateMsg" parameterType="order">
+        update sys_order
+        set rec_name=#{recName},
+            rec_phone=#{recPhone},
+            rec_address=#{recAddress},
+            state=#{state},
+            notes=#{notes}
+        where id = #{id}
+    </update>
 
+    <select id="getUserOrder" resultType="com.hu.bookstore.entity.Order">
+        select id,
+               user_id,
+               create_time,
+               rec_name,
+               rec_phone,
+               rec_address,
+               state,
+               notes
+        from sys_order
+        where user_id = #{userId}
+    </select>
+    <select id="getAllOrder" resultType="com.hu.bookstore.entity.Order">
+        select id,
+               create_time,
+               rec_name,
+               rec_phone,
+               rec_address,
+               user_id,
+               state,
+               notes
+        from sys_order
+        limit #{begin},#{size}
+    </select>
+    <select id="getAllOrderBykeyword" resultType="com.hu.bookstore.entity.Order">
+        select id,
+               create_time,
+               rec_name,
+               rec_phone,
+               rec_address,
+               user_id,
+               state,
+               notes
+        from sys_order
+        where rec_name like ('%${keyword}%')
+           or rec_phone like ('%${keyword}%')
+           or rec_address like ('%${keyword}%')
+           or notes like ('%${keyword}%')
+        limit ${begin},${size}
+    </select>
+    <select id="getTotal" resultType="java.lang.Integer">
+        select count(1) total
+        from sys_order
+
+    </select>
+    <select id="getTotalByKeyword" resultType="java.lang.Integer">
+        select count(1) total
+        from sys_order
+        where rec_name like ('%${keyword}%')
+           or rec_phone like ('%${keyword}%')
+           or rec_address like ('%${keyword}%')
+           or notes like ('%${keyword}%')
+    </select>
 </mapper>

@@ -2,7 +2,9 @@ package com.hu.bookstore.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hu.bookstore.entity.Book;
+import com.hu.bookstore.entity.Goods;
 import com.hu.bookstore.mapper.BookMapper;
+import com.hu.bookstore.mapper.GoodsMapper;
 import com.hu.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +21,10 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     @Autowired
     BookMapper bookMapper;
 
+
     @Override
-    public List<Book> getBookList(int current, int size) {
-        return bookMapper.getAllBook((current - 1) * size, size);
+    public int getTotalBook(Map<String, Object> condition) {
+        return bookMapper.getTotal(condition);
     }
 
     @Override
@@ -39,4 +42,15 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     public List<Book> getBookList(Integer current, Integer size, Map<String, Object> condition) {
         return bookMapper.getBookList((current - 1) * size, size, condition);
     }
+
+    @Override
+    public List<Book> getTrolleyBook(String trolleyId) {
+        return bookMapper.getBookListByTrolley(trolleyId);
+    }
+
+    @Override
+    public List<Book> getOrderBook(String orderId) {
+        return bookMapper.getBookListByOrder(orderId);
+    }
+
 }

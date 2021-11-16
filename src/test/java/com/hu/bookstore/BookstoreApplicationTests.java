@@ -18,14 +18,7 @@ class BookstoreApplicationTests {
 
     @Test
     void contextLoads() {
-        List<Book> bookList = bookMapper.getAllBook(0, 1);
-        Book book = bookList.get(0);
-        System.out.println(book);
-        book.setCommend(1);
-        bookMapper.updateById(book);
-        bookList = bookMapper.getAllBook(0, 1);
-        book = bookList.get(0);
-        System.out.println(book);
+
     }
 
 }

@@ -30,6 +30,7 @@ public class GoodsController {
     @Autowired
     private TrolleyService trolleyService;
 
+    // 传书id和数量
     @PostMapping("/addGoods")
     public Result addGoods(@RequestBody Goods goods) {
         SysUser userInfo = sysUserService.getUserInfo();

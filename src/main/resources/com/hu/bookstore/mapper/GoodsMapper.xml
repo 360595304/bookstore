@@ -6,6 +6,11 @@
         update sys_goods set order_id=#{orderId} where id=#{goodsId}
     </update>
     <update id="setAllOrderId">
-        update sys_goods set order_id=#{orderId} where trolley_id=#{trolleyId}
+        update sys_goods set order_id=#{orderId}
+        where trolley_id=#{trolleyId} and checked=1 and order_id is null
     </update>
+    <select id="getGoodsByOrder" resultType="com.hu.bookstore.entity.Goods">
+        select trolley_id, book_id, count, checked, id, order_id
+        from sys_goods
+    </select>
 </mapper>

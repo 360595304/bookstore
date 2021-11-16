@@ -12,8 +12,13 @@ import java.util.Map;
 @Mapper
 public interface BookMapper extends BaseMapper<Book> {
 
-    List<Book> getAllBook(@Param("begin") int begin, @Param("size") int size);
 
     List<Book> getBookList(@Param("begin") int begin, @Param("size") int size,
                            @Param("condition") Map<String, Object> condition);
+
+    int getTotal(@Param("condition") Map<String, Object> condition);
+
+    List<Book> getBookListByTrolley(@Param("trolleyId") String trolleyId);
+
+    List<Book> getBookListByOrder(@Param("orderId") String orderId);
 }

@@ -2,46 +2,79 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hu.bookstore.mapper.BookMapper">
 
-    <select id="getAllBook" resultType="Book">
-        select id,
-               name,
-               author,
-               type,
-               press,
-               original_price,
-               discount,
-               discount_price,
-               ISBN,
-               inventory,
-               picture_url,
-               intro,
-               commend,
-               state,
-               pub_date
-        from sys_book limit #{begin},#{size}
-    </select>
     <select id="getBookList" resultType="com.hu.bookstore.entity.Book">
         select id,
-               name,
-               author,
-               type,
-               press,
-               original_price,
-               discount,
-               discount_price,
-               ISBN,
-               inventory,
-               picture_url,
-               intro,
-               commend,
-               state,
-               pub_date
+        name,
+        author,
+        type,
+        press,
+        original_price,
+        discount,
+        discount_price,
+        ISBN,
+        inventory,
+        picture_url,
+        intro,
+        commend,
+        state,
+        pub_date
         from sys_book
-        where
-        <foreach collection="condition" item="value" index="key" separator="and">
+        <foreach collection="condition" item="value" index="key" separator="and" open="where">
             ${key} like ('%${value}%')
         </foreach>
         limit #{begin},#{size}
 
+    </select>
+
+    <select id="getBookListByTrolley" resultType="com.hu.bookstore.entity.Book">
+        select sb.id,
+               name,
+               author,
+               type,
+               press,
+               original_price,
+               discount,
+               discount_price,
+               ISBN,
+               inventory,
+               picture_url,
+               intro,
+               commend,
+               state,
+               pub_date
+        from sys_goods sg
+                 left join sys_book sb on sb.id = sg.book_id
+        where trolley_id = #{trolleyId}
+          and order_id is null
+
+
+    </select>
+
+    <select id="getBookListByOrder" resultType="com.hu.bookstore.entity.Book">
+        select sb.id,
+               name,
+               author,
+               type,
+               press,
+               original_price,
+               discount,
+               discount_price,
+               ISBN,
+               inventory,
+               picture_url,
+               intro,
+               commend,
+               state,
+               pub_date
+        from sys_goods sg
+                 left join sys_book sb on sb.id = sg.book_id
+        where order_id = #{orderId}
+    </select>
+    <select id="getTotal" resultType="java.lang.Integer">
+        select count(1) total
+        from sys_book
+        <foreach collection="condition" item="value" index="key" separator="and" open="where">
+            ${key} like ('%${value}%')
+        </foreach>
     </select>
 </mapper>

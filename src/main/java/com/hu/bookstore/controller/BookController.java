@@ -26,18 +26,17 @@ public class BookController {
     @Autowired
     BookService bookService;
 
-    @GetMapping("/getBookList")
+    @PostMapping("/getBookList")
     public Result getBookList(@RequestParam(value = "current", defaultValue = "1") Integer current,
-                                 @RequestParam(value = "size", defaultValue = "7") Integer size,
+                              @RequestParam(value = "size", defaultValue = "7") Integer size,
                               @RequestBody Map<String, Object> condition) {
         List<Book> bookList;
-        if (condition.isEmpty()){
-             bookList = bookService.getBookList(current, size);
-        } else {
-            bookList = bookService.getBookList(current, size, condition);
-        }
+        System.out.println(condition);
+        bookList = bookService.getBookList(current, size, condition);
+        int total = bookService.getTotalBook(condition);
         Map<String, Object> data = new HashMap<>();
-        data.put("bookArr",bookList);
+        data.put("bookArr", bookList);
+        data.put("total",total);
         return Result.ok().data(data);
     }
 

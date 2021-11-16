@@ -62,10 +62,10 @@ public class Book {
     @ApiModelProperty("简介")
     private String intro;
 
-    @ApiModelProperty("推荐 1:推荐")
-    private Integer commend;
+    @ApiModelProperty("推荐")
+    private Boolean commend;
 
-    @ApiModelProperty("状态[0:下架,1:上架]")
-    private Integer state;
+    @ApiModelProperty("状态[下架,上架]")
+    private Boolean state;
 
 }
