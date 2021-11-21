@@ -21,4 +21,6 @@ public interface BookMapper extends BaseMapper<Book> {
     List<Book> getBookListByTrolley(@Param("trolleyId") String trolleyId);
 
     List<Book> getBookListByOrder(@Param("orderId") String orderId);
+
+    void addSales(@Param("bookId") String bookId);
 }

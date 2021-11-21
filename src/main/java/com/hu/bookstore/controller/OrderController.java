@@ -63,7 +63,7 @@ public class OrderController {
     }
 
     // 获取当前用户的订单
-    @GetMapping("get")
+    @GetMapping("/get")
     public Result getOrder() {
         SysUser userInfo = sysUserService.getUserInfo();
         List<OrderVO> orderVOList = new ArrayList<>();
@@ -81,6 +81,9 @@ public class OrderController {
     @PostMapping("/finish/{orderId}")
     public Result finishOrder(@PathVariable("orderId") String orderId) {
         orderService.finish(orderId);
+        for (Book book : bookService.getOrderBook(orderId)) {
+            bookService.addSales(book.getId());
+        }
 
         return Result.ok();
     }

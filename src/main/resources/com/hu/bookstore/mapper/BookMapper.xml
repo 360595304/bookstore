@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hu.bookstore.mapper.BookMapper">
+    <update id="addSales">
+        update sys_book
+        set sales=sales + 1
+        where id = #{bookId}
+    </update>
 
     <select id="getBookList" resultType="com.hu.bookstore.entity.Book">
         select id,
@@ -13,6 +18,7 @@
         discount_price,
         ISBN,
         inventory,
+        sales,
         picture_url,
         intro,
         commend,
@@ -37,6 +43,7 @@
                discount_price,
                ISBN,
                inventory,
+               sales,
                picture_url,
                intro,
                commend,
@@ -61,6 +68,7 @@
                discount_price,
                ISBN,
                inventory,
+               sales,
                picture_url,
                intro,
                commend,

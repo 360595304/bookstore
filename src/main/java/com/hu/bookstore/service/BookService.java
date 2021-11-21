@@ -22,4 +22,5 @@ public interface BookService extends IService<Book> {
 
     List<Book> getOrderBook(String orderId);
 
+    void addSales(String bookId);
 }

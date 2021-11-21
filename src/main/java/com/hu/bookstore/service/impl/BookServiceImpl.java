@@ -53,4 +53,9 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
         return bookMapper.getBookListByOrder(orderId);
     }
 
+    @Override
+    public void addSales(String bookId) {
+        bookMapper.addSales(bookId);
+    }
+
 }

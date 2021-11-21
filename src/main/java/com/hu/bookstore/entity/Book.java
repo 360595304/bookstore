@@ -43,6 +43,9 @@ public class Book {
     @ApiModelProperty("折扣")
     private Integer discount;
 
+    @ApiModelProperty("销量")
+    private Integer sales;
+
     @ApiModelProperty("折扣价")
     private Double discountPrice;
 
