@@ -53,4 +53,34 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
         return bookMapper.getBookListByOrder(orderId);
     }
 
+    @Override
+    public void addSales(String bookId) {
+        bookMapper.addSales(bookId);
+    }
+
+    @Override
+    public void addView(String bookId) {
+        bookMapper.addView(bookId);
+    }
+
+    @Override
+    public List<Book> getSimilarBook(String type) {
+        return bookMapper.getSimilarBook(type);
+    }
+
+    @Override
+    public List<Book> getNewBook(int num) {
+        return bookMapper.getNewBook(num);
+    }
+
+    @Override
+    public List<Book> getHotBook(int num) {
+        return bookMapper.getHotBook(num);
+    }
+
+    @Override
+    public List<Book> getRecommendedBook(int num) {
+        return bookMapper.getRecommendedBook(num);
+    }
+
 }

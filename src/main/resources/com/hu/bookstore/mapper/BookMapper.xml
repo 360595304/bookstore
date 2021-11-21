@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hu.bookstore.mapper.BookMapper">
 
+    <update id="addView">
+        update sys_book
+        set view=view + 1
+        where id = #{bookId}
+    </update>
+    <update id="addSales">
+        update sys_book
+        set sales=sales + 1
+        where id = #{bookId}
+    </update>
+
     <select id="getBookList" resultType="com.hu.bookstore.entity.Book">
         select id,
         name,
@@ -13,6 +24,7 @@
         discount_price,
         ISBN,
         inventory,
+        sales,
         picture_url,
         intro,
         commend,
@@ -37,6 +49,7 @@
                discount_price,
                ISBN,
                inventory,
+               sales,
                picture_url,
                intro,
                commend,
@@ -61,6 +74,7 @@
                discount_price,
                ISBN,
                inventory,
+               sales,
                picture_url,
                intro,
                commend,
@@ -76,5 +90,94 @@
         <foreach collection="condition" item="value" index="key" separator="and" open="where">
             ${key} like ('%${value}%')
         </foreach>
+    </select>
+    <select id="getSimilarBook" resultType="com.hu.bookstore.entity.Book">
+        select id,
+               name,
+               author,
+               type,
+               pub_date,
+               press,
+               original_price,
+               discount,
+               discount_price,
+               ISBN,
+               view,
+               inventory,
+               picture_url,
+               intro,
+               sales,
+               commend,
+               state
+        from sys_book
+        where type like '%${type}%'
+        limit 0,6
+    </select>
+    <select id="getNewBook" resultType="com.hu.bookstore.entity.Book">
+        select id,
+               name,
+               author,
+               type,
+               pub_date,
+               press,
+               original_price,
+               discount,
+               discount_price,
+               ISBN,
+               view,
+               inventory,
+               picture_url,
+               intro,
+               sales,
+               commend,
+               state
+        from sys_book
+        order by pub_date desc
+        limit 0,#{num}
+    </select>
+    <select id="getHotBook" resultType="com.hu.bookstore.entity.Book">
+        select id,
+               name,
+               author,
+               type,
+               pub_date,
+               press,
+               original_price,
+               discount,
+               discount_price,
+               ISBN,
+               view,
+               inventory,
+               picture_url,
+               intro,
+               sales,
+               commend,
+               state
+        from sys_book
+        order by view desc
+        limit 0,#{num}
+    </select>
+    <select id="getRecommendedBook" resultType="com.hu.bookstore.entity.Book">
+        select id,
+               name,
+               author,
+               type,
+               pub_date,
+               press,
+               original_price,
+               discount,
+               discount_price,
+               ISBN,
+               view,
+               inventory,
+               picture_url,
+               intro,
+               sales,
+               commend,
+               state
+        from sys_book
+        where commend=1
+        order by view desc
+        limit 0,#{num}
     </select>
 </mapper>

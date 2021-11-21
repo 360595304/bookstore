@@ -25,17 +25,17 @@ public class SwaggerConfiguration {
                 .apiInfo(apiInfo())
                 .select()
                 //这里一定要标注你控制器的位置
-                .apis(RequestHandlerSelectors.basePackage("com.xiaoge.bootsecurity.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.hu.bookstore.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("新冠物资管理系统API文档")
-                .description("新冠物资管理系统API文档")
-                .termsOfServiceUrl("https://angegit.gitee.io/myblog/")
-                .contact(new Contact("xiaoge","https://angegit.gitee.io/myblog/","1351261434@qq.com"))
+                .title("网上书店管理系统API文档")
+                .description("网上书店管理系统API文档")
+                .termsOfServiceUrl("https://github.com/360595304/bookstore")
+                .contact(new Contact("suhu","https://github.com/360595304/bookstore","360595304@qq.com"))
                 .version("1.0")
                 .build();
     }

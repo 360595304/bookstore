@@ -90,4 +90,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public void updateMsg(Order order) {
         orderMapper.updateMsg(order);
     }
+
+    @Override
+    public void pay(String orderId) {
+        orderMapper.payOrder(orderId);
+    }
 }

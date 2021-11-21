@@ -1,5 +1,7 @@
 package com.hu.bookstore.filter;
 
+import com.hu.bookstore.exception.BusinessException;
+import com.hu.bookstore.response.ResultCode;
 import com.hu.bookstore.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +27,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    private String header = "Authorization";
+    private final String header = "Authorization";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -57,10 +59,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 check = this.jwtTokenUtil.isTokenExpired(token);
             } catch (Exception e) {
                 //过期则抛出异常
-                new Throwable("令牌已过期，请重新登录。"+e.getMessage());
+                try {
+                    throw new BusinessException(ResultCode.USER_ACCOUNT_EXPIRED.getCode(), "令牌已过期，请重新登录。" + e.getMessage());
+                } catch (Throwable ex) {
+                    ex.printStackTrace();
+                }
             }
             //如果没有过期,则要验证token的合法性了
-            if(!check){
+            if (!check) {
                 //通过令牌获取用户名称
                 String username = jwtTokenUtil.getUsernameFromToken(token);
                 System.out.println("username = " + username);
@@ -68,14 +74,18 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 //拿到用户名之后,重新通过userService的loadUserByUsername方法重新得到一个用户
                 //放到securityContext的上下文中就行了
                 //判断用户不为空，且SecurityContextHolder授权信息还是空的
-                if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
+                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                     //验证令牌有效性
                     boolean validata = false;
                     try {
-                        validata = jwtTokenUtil.validateToken(token,userDetails);
+                        validata = jwtTokenUtil.validateToken(token, userDetails);
                     } catch (Exception e) {
-                        new Throwable("验证token无效:"+e.getMessage());
+                        try {
+                            throw new Throwable("验证token无效:" + e.getMessage());
+                        } catch (Throwable ex) {
+                            ex.printStackTrace();
+                        }
                     }
                     if (validata) {
                         // 将用户信息存入 authentication，方便后续校验

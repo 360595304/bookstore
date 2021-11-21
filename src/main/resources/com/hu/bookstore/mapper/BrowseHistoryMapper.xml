@@ -2,4 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hu.bookstore.mapper.BrowseHistoryMapper">
 
+    <select id="getHistoryBook" resultType="com.hu.bookstore.vo.HistoryVO">
+        select bh.id as id, sb.id as book_id, sb.picture_url, bh.browse_time
+
+        from sys_browsing_history bh
+                 join sys_book sb on sb.id = bh.book_id
+        where user_id = #{userId}
+        order by browse_time desc
+
+    </select>
+    <select id="query" resultType="com.hu.bookstore.entity.BrowseHistory">
+        select id, user_id, book_id, browse_time
+
+        from sys_browsing_history
+        where user_id = #{userId}
+          and book_id = #{bookId}
+    </select>
 </mapper>

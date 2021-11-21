@@ -23,4 +23,6 @@ public interface OrderMapper extends BaseMapper<Order> {
     int getTotal(@Param("begin")int begin, @Param("size")int size);
 
     void updateMsg(Order order);
+
+    void payOrder(@Param("orderId")String orderId);
 }

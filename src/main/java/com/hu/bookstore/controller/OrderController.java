@@ -33,14 +33,14 @@ public class OrderController {
     private SysUserService sysUserService;
 
     @Autowired
-    TrolleyService trolleyService;
+    private TrolleyService trolleyService;
 
     @Autowired
-    BookService bookService;
+    private BookService bookService;
 
     // 传收货信息和货物id
     @PostMapping("/create")
-    public Result pay(@RequestBody Order order, @Param("goodsId") int goodsId) {
+    public Result create(@RequestBody Order order, @Param("goodsId") int goodsId) {
         SysUser userInfo = sysUserService.getUserInfo();
         Long id = userInfo.getId();
         order.setUserId(id);
@@ -51,7 +51,7 @@ public class OrderController {
 
     // 传收货信息
     @PostMapping("/createByTrolley")
-    public Result payByTrolley(@RequestBody Order order) {
+    public Result createByTrolley(@RequestBody Order order) {
         SysUser userInfo = sysUserService.getUserInfo();
         Long id = userInfo.getId();
         Trolley trolley = trolleyService.getByUserId(id);
@@ -63,7 +63,7 @@ public class OrderController {
     }
 
     // 获取当前用户的订单
-    @GetMapping("get")
+    @GetMapping("/get")
     public Result getOrder() {
         SysUser userInfo = sysUserService.getUserInfo();
         List<OrderVO> orderVOList = new ArrayList<>();
@@ -81,10 +81,18 @@ public class OrderController {
     @PostMapping("/finish/{orderId}")
     public Result finishOrder(@PathVariable("orderId") String orderId) {
         orderService.finish(orderId);
+        for (Book book : bookService.getOrderBook(orderId)) {
+            bookService.addSales(book.getId());
+        }
 
-        return Result.ok();
+        return Result.ok().message("订单已完成，感谢您的购买！");
     }
 
+    @PostMapping("/payOrder/{orderId}")
+    public Result payOrder(@PathVariable("orderId") String orderId) {
+        orderService.pay(orderId);
+        return Result.ok().message("支付成功！");
+    }
 
 //    @PostMapping("/finish")
 //    public Result finishOrder(@RequestBody Order order) {

@@ -15,6 +15,11 @@
             notes=#{notes}
         where id = #{id}
     </update>
+    <update id="payOrder">
+        update sys_order
+        set state=1
+        where id = #{orderId}
+    </update>
 
     <select id="getUserOrder" resultType="com.hu.bookstore.entity.Order">
         select id,

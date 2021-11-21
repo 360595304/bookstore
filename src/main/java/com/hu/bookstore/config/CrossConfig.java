@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author NieChangan
  */
 @Configuration
-public class CrosConfig implements WebMvcConfigurer {
+public class CrossConfig implements WebMvcConfigurer {
 
     /**
      * Configure cross origin requests processing.
