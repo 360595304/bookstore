@@ -8,12 +8,12 @@
     </update>
     <update id="updateMsg" parameterType="order">
         update sys_order
-        set rec_name=#{recName},
-            rec_phone=#{recPhone},
-            rec_address=#{recAddress},
-            state=#{state},
-            notes=#{notes}
-        where id = #{id}
+        set rec_name=#{order.recName},
+            rec_phone=#{order.recPhone},
+            rec_address=#{order.recAddress},
+            state=#{order.state},
+            notes=#{order.notes}
+        where id = #{order.id}
     </update>
     <update id="payOrder">
         update sys_order
@@ -73,5 +73,11 @@
            or rec_phone like ('%${keyword}%')
            or rec_address like ('%${keyword}%')
            or notes like ('%${keyword}%')
+    </select>
+    <select id="getOrderPrice" resultType="java.lang.Double">
+        SELECT SUM(discount_price * count)
+        FROM sys_goods
+                 join sys_book ON sys_goods.book_id = sys_book.id
+        where sys_goods.order_id = #{orderId}
     </select>
 </mapper>

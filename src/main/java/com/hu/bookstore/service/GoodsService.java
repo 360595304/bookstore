@@ -11,11 +11,12 @@ public interface GoodsService extends IService<Goods> {
 
     void updateGoods(Goods goods);
 
-    void setOrderId(int goodsId, String orderId);
+    void setOrderId(String goodsId, String orderId);
 
     void setAllOrderId(String trolleyId, String orderId);
 
     List<Goods> getOrderGoods(String id);
 
     public GoodsVO transformGoodsVO(Goods goods);
+
 }

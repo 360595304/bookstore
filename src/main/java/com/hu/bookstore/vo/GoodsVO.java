@@ -9,6 +9,10 @@ import lombok.Data;
  */
 @Data
 public class GoodsVO {
+    private String id;
+
+    private String pictureUrl;
+
     private String bookId;
 
     private String bookName;
@@ -20,4 +24,6 @@ public class GoodsVO {
     private Double price;
 
     private Integer count;
+
+    private Boolean checked;
 }

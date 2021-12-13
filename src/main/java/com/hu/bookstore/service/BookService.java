@@ -1,5 +1,6 @@
 package com.hu.bookstore.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hu.bookstore.entity.Book;
 import com.hu.bookstore.entity.Goods;
@@ -34,4 +35,7 @@ public interface BookService extends IService<Book> {
 
     List<Book> getRecommendedBook(int num);
 
+    Page<Book> getList(int current, int size, String key);
+
+    List<GoodsVO> getByCartId(String id);
 }

@@ -3,14 +3,19 @@
 <mapper namespace="com.hu.bookstore.mapper.GoodsMapper">
 
     <update id="setOrderId">
-        update sys_goods set order_id=#{orderId} where id=#{goodsId}
+        update sys_goods
+        set order_id=#{orderId}
+        where id = #{goodsId}
     </update>
     <update id="setAllOrderId">
-        update sys_goods set order_id=#{orderId}
-        where trolley_id=#{trolleyId} and checked=1 and order_id is null
+        update sys_goods
+        set order_id=#{orderId}
+        where trolley_id = #{trolleyId}
+          and checked = 1
+          and order_id is null
     </update>
     <select id="getGoodsByOrder" resultType="com.hu.bookstore.entity.Goods">
         select trolley_id, book_id, count, checked, id, order_id
-        from sys_goods
+        from sys_goods where order_id=#{orderId}
     </select>
 </mapper>

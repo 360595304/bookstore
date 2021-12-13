@@ -28,4 +28,6 @@ public interface OrderService extends IService<Order> {
     void updateMsg(Order order);
 
     void pay(String orderId);
+
+    double getOrderPrice(String orderId);
 }

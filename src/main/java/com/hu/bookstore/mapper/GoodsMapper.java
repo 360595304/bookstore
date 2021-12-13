@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface GoodsMapper extends BaseMapper<Goods> {
-    void setOrderId(@Param("goodsId") int goodsId, @Param("orderId") String orderId);
+    void setOrderId(@Param("goodsId") String goodsId, @Param("orderId") String orderId);
 
     void setAllOrderId(@Param("trolleyId") String trolleyId, @Param("orderId") String orderId);
 

@@ -44,7 +44,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     }
 
     @Override
-    public void setOrderId(int goodsId, String orderId) {
+    public void setOrderId(String goodsId, String orderId) {
         goodsMapper.setOrderId(goodsId, orderId);
     }
 
@@ -70,5 +70,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         goodsVO.setPrice(book.getDiscountPrice());
         return goodsVO;
     }
+
+
 
 }

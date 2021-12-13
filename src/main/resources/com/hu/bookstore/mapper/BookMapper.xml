@@ -12,11 +12,7 @@
         set view=view + 1
         where id = #{bookId}
     </update>
-    <update id="addSales">
-        update sys_book
-        set sales=sales + 1
-        where id = #{bookId}
-    </update>
+
 
     <select id="getBookList" resultType="com.hu.bookstore.entity.Book">
         select id,
@@ -181,8 +177,23 @@
                commend,
                state
         from sys_book
-        where commend=1
+        where commend = 1
         order by view desc
         limit 0,#{num}
+    </select>
+    <select id="getBookByCart" resultType="com.hu.bookstore.vo.GoodsVO">
+        select sys_goods.id as id,
+               sb.id           bookId,
+               name            bookName,
+               author,
+               press,
+               discount_price  price,
+               picture_url,
+               count,
+               checked
+        from sys_goods
+                 join sys_book sb on sb.id = sys_goods.book_id
+        where sys_goods.trolley_id = #{id}
+          AND sys_goods.order_id is null
     </select>
 </mapper>

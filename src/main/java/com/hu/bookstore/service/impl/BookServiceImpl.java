@@ -1,11 +1,14 @@
 package com.hu.bookstore.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hu.bookstore.entity.Book;
 import com.hu.bookstore.entity.Goods;
 import com.hu.bookstore.mapper.BookMapper;
 import com.hu.bookstore.mapper.GoodsMapper;
 import com.hu.bookstore.service.BookService;
+import com.hu.bookstore.vo.GoodsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,5 +85,22 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     public List<Book> getRecommendedBook(int num) {
         return bookMapper.getRecommendedBook(num);
     }
+
+    @Override
+    public Page<Book> getList(int current, int size, String key) {
+        QueryWrapper<Book> wrapper = new QueryWrapper<>();
+        Page<Book> page = new Page<>(current, size);
+        wrapper.like("name", key).or()
+                .like("author", key).or()
+                .like("press", key).or()
+                .like("type", key);
+        return bookMapper.selectPage(page, wrapper);
+    }
+
+    @Override
+    public List<GoodsVO> getByCartId(String id) {
+        return bookMapper.getBookByCart(id);
+    }
+
 
 }

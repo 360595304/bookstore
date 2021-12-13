@@ -2,6 +2,8 @@ package com.hu.bookstore.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hu.bookstore.entity.Book;
+import com.hu.bookstore.entity.Goods;
+import com.hu.bookstore.vo.GoodsVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -34,4 +36,5 @@ public interface BookMapper extends BaseMapper<Book> {
 
     List<Book> getRecommendedBook(@Param("num")int num);
 
+    List<GoodsVO> getBookByCart(@Param("id")String id);
 }

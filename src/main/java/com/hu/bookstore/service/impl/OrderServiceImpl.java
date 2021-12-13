@@ -95,4 +95,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public void pay(String orderId) {
         orderMapper.payOrder(orderId);
     }
+
+    @Override
+    public double getOrderPrice(String orderId) {
+        return orderMapper.getOrderPrice(orderId);
+    }
 }

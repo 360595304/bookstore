@@ -1,7 +1,10 @@
 package com.hu.bookstore.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hu.bookstore.entity.Book;
 import com.hu.bookstore.entity.BrowseHistory;
+import com.hu.bookstore.entity.SysUser;
 import com.hu.bookstore.response.Result;
 import com.hu.bookstore.service.BookService;
 import com.hu.bookstore.service.BrowseHistoryService;
@@ -42,7 +45,7 @@ public class BookController {
         int total = bookService.getTotalBook(condition);
         Map<String, Object> data = new HashMap<>();
         data.put("bookArr", bookList);
-        data.put("total",total);
+        data.put("total", total);
         return Result.ok().data(data);
     }
 
@@ -70,10 +73,13 @@ public class BookController {
     public Result getBook(@PathVariable String bookId) {
         Book book = bookService.getById(bookId);
         bookService.addView(bookId);
-        BrowseHistory history = new BrowseHistory();
-        history.setUserId(userService.getUserInfo().getId());
-        history.setBookId(bookId);
-        browseHistoryService.add(history);
+        SysUser user = userService.getUserInfo();
+        if (user != null) {
+            BrowseHistory history = new BrowseHistory();
+            history.setUserId(user.getId());
+            history.setBookId(bookId);
+            browseHistoryService.add(history);
+        }
         return Result.ok().data("book", book);
     }
 
@@ -105,6 +111,16 @@ public class BookController {
     @GetMapping("/getSimilarBook/{type}")
     public Result getSimilarBook(@PathVariable String type) {
         List<Book> bookList = bookService.getSimilarBook(type);
+        return Result.ok().data("bookList", bookList);
+    }
+
+    @GetMapping("/getList/{key}")
+    public Result getList(@RequestParam(value = "current", defaultValue = "1") Integer current,
+                          @RequestParam(value = "size", defaultValue = "7") Integer size,
+                          @PathVariable String key) {
+
+
+        Page<Book> bookList =  bookService.getList(current, size, key);
         return Result.ok().data("bookList", bookList);
     }
 }
